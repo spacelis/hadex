@@ -53,13 +53,12 @@ public class TestGamma {
 	 * Test method for {@link tudelft.hadex.structure.util.Gamma#blockEncode(long[])}.
 	 */
 	@Test
-	public void testBlockEncodeDesigned() {
+	public void testBlockEncodeBasic() {
 		Gamma codec = new Gamma();
-		long[] ints = new long[]{1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16};
+		long[] ints = new long[]{-1,-2,3,4,5,6,7,8,9,10,11,12,13,14,15,16};
 		long[] codes = codec.blockEncode(ints);
 		long[] decoded = codec.blockDecode(codes);
 		
-		assertArrayEquals(codes, new long[]{-6466438018444421584L, 7557569039820652544L});
 		assertArrayEquals(decoded, ints);
 	}
 
@@ -69,12 +68,17 @@ public class TestGamma {
 	@Test
 	public void testBlockEncodeSpeed() {
 		long[][] codes = new long[SIZE][];
-		Gamma codec = new Gamma(2049);
+		long[][] decoded = new long[SIZE][];
+		Gamma codec = new Gamma(2*SIZE);
 		int length = 0;
 		for(int i=0; i<SIZE; ++i) {
 			codes[i] = codec.blockEncode(x[i]);
+			decoded[i] = codec.blockDecode(codes[i]);
 			length += codes[i].length;
 		}
 		System.out.println("Total Length: " + length + "/" + SIZE*SIZE);
+		for(int i=0; i<SIZE; ++i) {
+			assertArrayEquals(x[i], decoded[i]);
+		}
 	}
 }

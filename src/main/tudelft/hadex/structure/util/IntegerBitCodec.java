@@ -43,7 +43,7 @@ public abstract class IntegerBitCodec {
 	public static int bitLength(long v){
 		return 64 - Long.numberOfLeadingZeros(v);
 	}
-		
+	
 	/**
 	 * Encode integers into compressed codes
 	 * @param integers
