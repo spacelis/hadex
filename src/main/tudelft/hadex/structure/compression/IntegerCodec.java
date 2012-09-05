@@ -20,7 +20,7 @@
  * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package tudelft.hadex.structure.util;
+package tudelft.hadex.structure.compression;
 
 /**
  * Postings are usually arrays of integers which could contain
@@ -29,19 +29,24 @@ package tudelft.hadex.structure.util;
  * @author wenli
  *
  */
-public abstract class IntegerBitCodec {
+public abstract class IntegerCodec {
 	
 	/**
 	 * Get the bit length of the number
 	 * @param v the given integer
 	 * @return the number of bit that is needed for storing the integer
 	 */
-	public static int bitLength(int v){
+	public int bitLength(int v){
 		return 32 - Integer.numberOfLeadingZeros(v);
 	}
 	
-	public static int bitLength(long v){
+	public int bitLength(long v){
 		return 64 - Long.numberOfLeadingZeros(v);
+	}
+	
+	public long bitloopmove(long v, int offset) {
+		offset &= 0x3f;
+		return (v >>> offset) | (v << (64 - offset));
 	}
 	
 	/**

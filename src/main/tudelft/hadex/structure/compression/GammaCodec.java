@@ -1,8 +1,8 @@
-package tudelft.hadex.structure.util;
+package tudelft.hadex.structure.compression;
 
 import java.util.Arrays;
 
-public class Gamma extends IntegerBitCodec{
+public class GammaCodec extends IntegerCodec{
 	
 	private long[] mask = new long[]{
 			0xFFFFFFFFFFFFFFFFL, 0x7FFFFFFFFFFFFFFFL, 0x3FFFFFFFFFFFFFFFL, 0x1FFFFFFFFFFFFFFFL,
@@ -27,11 +27,11 @@ public class Gamma extends IntegerBitCodec{
 	private long[] buffer;
 	private int pos;
 	
-	public Gamma(int buffsize){
+	public GammaCodec(int buffsize){
 		buffer = new long[buffsize];
 	}
 	
-	public Gamma(){
+	public GammaCodec(){
 		this(1024);
 	}
 	
@@ -69,7 +69,7 @@ public class Gamma extends IntegerBitCodec{
 	/**
 	 * Gamma Codec Decoder
 	 * @param codes Compressed codes for integers
-	 * @see tudelft.hadex.structure.util.IntegerBitCodec#blockDecode(long[])
+	 * @see tudelft.hadex.structure.compression.IntegerCodec#blockDecode(long[])
 	 */
 	@Override
 	public long[] blockDecode(long[] codes) {

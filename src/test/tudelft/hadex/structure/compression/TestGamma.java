@@ -20,7 +20,7 @@
  * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package tudelft.hadex.structure.util;
+package tudelft.hadex.structure.compression;
 
 import static org.junit.Assert.*;
 
@@ -29,6 +29,8 @@ import java.util.Random;
 
 import org.junit.Before;
 import org.junit.Test;
+
+import tudelft.hadex.structure.compression.GammaCodec;
 
 /**
  * @author wenli
@@ -50,26 +52,26 @@ public class TestGamma {
 	}
 
 	/**
-	 * Test method for {@link tudelft.hadex.structure.util.Gamma#blockEncode(long[])}.
+	 * Test method for {@link tudelft.hadex.structure.compression.GammaCodec#blockEncode(long[])}.
 	 */
 	@Test
 	public void testBlockEncodeBasic() {
-		Gamma codec = new Gamma();
+		GammaCodec codec = new GammaCodec();
 		long[] ints = new long[]{-1,-2,3,4,5,6,7,8,9,10,11,12,13,14,15,16};
 		long[] codes = codec.blockEncode(ints);
 		long[] decoded = codec.blockDecode(codes);
 		
-		assertArrayEquals(decoded, ints);
+		assertArrayEquals(ints, decoded);
 	}
 
 	/**
-	 * Test method for {@link tudelft.hadex.structure.util.Gamma#blockEncode(long[])}.
+	 * Test method for {@link tudelft.hadex.structure.compression.GammaCodec#blockEncode(long[])}.
 	 */
 	@Test
 	public void testBlockEncodeSpeed() {
 		long[][] codes = new long[SIZE][];
 		long[][] decoded = new long[SIZE][];
-		Gamma codec = new Gamma(2*SIZE);
+		GammaCodec codec = new GammaCodec(2*SIZE);
 		int length = 0;
 		for(int i=0; i<SIZE; ++i) {
 			codes[i] = codec.blockEncode(x[i]);
@@ -80,5 +82,15 @@ public class TestGamma {
 		for(int i=0; i<SIZE; ++i) {
 			assertArrayEquals(x[i], decoded[i]);
 		}
+	}
+	
+	@Test
+	public void testBitLoopMove() {
+		GammaCodec codec = new GammaCodec();
+		assertEquals(0x8000000000000000L, codec.bitloopmove(0x1, 1));
+		assertEquals(1, codec.bitloopmove(0x2, 1));
+		assertEquals(1, codec.bitloopmove(0x2, 65));
+		assertEquals(4, codec.bitloopmove(0x2, -65));
+		assertEquals(1, codec.bitloopmove(0x0001000000000000L, -10));
 	}
 }

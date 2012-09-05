@@ -20,7 +20,7 @@
  * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package tudelft.hadex.structure.util;
+package tudelft.hadex.structure.compression;
 
 import static org.junit.Assert.*;
 
@@ -32,18 +32,13 @@ import org.junit.Test;
  * @author wenli
  *
  */
-public class TestIntegerBitCodec {
+public class TestIntegerCodec {
 
 	/**
-	 * Test method for {@link tudelft.hadex.structure.util.IntegerBitCodec#bitLength(int)}.
+	 * Test method for {@link tudelft.hadex.structure.compression.IntegerCodec#bitLength(int)}.
 	 */
 	@Test
 	public void testBitLength() {
-		Random r = new Random(System.currentTimeMillis());
-		for(int i=0; i<1000000; ++i){
-			int x = r.nextInt(100000);
-			assertEquals("IntegerLength: ", 32 - Integer.numberOfLeadingZeros(x), IntegerBitCodec.bitLength(x));
-		}
 	}
 	
 }
