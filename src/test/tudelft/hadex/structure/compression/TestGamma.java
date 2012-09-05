@@ -90,6 +90,6 @@ public class TestGamma {
 		assertEquals(1, codec.bitloopmove(0x2, 1));
 		assertEquals(1, codec.bitloopmove(0x2, 65));
 		assertEquals(4, codec.bitloopmove(0x2, -65));
-		assertEquals(1, codec.bitloopmove(0x0001000000000000L, -10));
+		assertEquals(1, codec.bitloopmove(0x0001000000000000L, -16));
 	}
 }
